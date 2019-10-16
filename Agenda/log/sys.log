@@ -1,0 +1,3 @@
+[file normal] 22:53:13 tool.go:40: file opened: ./log/sys.log
+[file normal] 22:53:13 tool.go:40: file opened: ./log/register.log
+[file normal] 22:53:13 tool.go:40: file opened: ./resources/user.json
