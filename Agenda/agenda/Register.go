@@ -2,9 +2,7 @@ package agenda
 
 import (
 	"Agenda/tool"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
@@ -20,23 +18,10 @@ type Registers struct {
 var names Registers
 
 func init() {
-	bytes, err := ioutil.ReadFile("./resources/user.json")
-	if err != nil {
-		tool.MakeLog("json read error", err.Error(), tool.Files["sys"], false)
-		os.Exit(1)
-	}
-	err = json.Unmarshal(bytes, &names)
-	if err != nil {
-		tool.MakeLog("Unmarshal error", err.Error(), tool.Files["sys"], false)
-		os.Exit(1)
-	}
+	tool.ReadJson(&names, tool.Paths["user"])
 }
 
-func ShowMessage(name, password string) {
-	fmt.Println(name + ", " + password)
-}
-
-func Check(name string) bool {
+func Check(name, password string) bool {
 	if name == "" {
 		tool.MakeLog("format error", "empty name", tool.Files["reg"], true)
 		return false
@@ -49,22 +34,30 @@ func Check(name string) bool {
 			return false
 		}
 	}
+	if password == tool.DefaultPassword {
+		var check string
+		fmt.Println("Sure to use the default password: " + tool.DefaultPassword + " ?(y/n)")
+		_, err := fmt.Scanf("%s", &check)
+		if err == nil {
+			if check == "y" || check == "Y" {
+				return true
+			}else {
+				tool.MakeLog("failed try", "fail to register", tool.Files["reg"], true)
+				return false
+			}
+		}else {
+			tool.MakeLog("input error", err.Error(), tool.Files["sys"], false)
+			os.Exit(1)
+		}
+	}
 	return true
 }
 
 func AddUser(name, password string) {
 	user := Users{Name: name, Password: password}
 	names.Users = append(names.Users, user)
-	bytes, err := json.Marshal(names)
-	if err != nil {
-		tool.MakeLog("json error", err.Error(), tool.Files["sys"], false)
-		os.Exit(1)
-	}
-	err = ioutil.WriteFile(tool.Paths["user"], bytes, 666)
-	if err != nil {
-		tool.MakeLog("json write error", err.Error(), tool.Files["sys"], false)
-		os.Exit(1)
-	}
+	tool.WriteJson(names, tool.Paths["user"])
+	tool.CreateFile(name, tool.GetJsonPath(name))
 	message := "add user: "
 	message += name + " succeed"
 	tool.MakeLog("add user", message, tool.Files["reg"], true)

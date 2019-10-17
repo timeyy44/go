@@ -9,6 +9,7 @@ import (
 
 var Paths = map[string]string{"sys":"./log/sys.log", "reg":"./log/register.log", "user":"./resources/user.json"}
 var Files = make(map[string]*os.File)
+var DefaultPassword = "000000"
 
 func init() {
 	for key, value := range Paths {
@@ -51,3 +52,26 @@ func CloseFiles() {
 		}
 	}
 }
+
+func CreateFile(short, path string) {
+	_, exists := Paths[short]
+	if !exists {
+		file, err := os.Create(path)
+		if err != nil {
+			MakeLog("create file error", err.Error(), Files["sys"], false)
+			os.Exit(1)
+		}
+		Files[short] = file
+		message := "file created: "
+		message += path
+		MakeLog("file create", message, Files["sys"], false)
+	}
+}
+
+func GetLogPath(name string) string {
+	return "./log/" + name + ".log"
+}
+func GetJsonPath(name string) string {
+	return "./resources/" + name + ".json"
+}
+

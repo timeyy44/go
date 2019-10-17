@@ -28,8 +28,7 @@ var registerCmd = &cobra.Command{
 	Short: "register for your account",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		if agenda.Check(name) {
-			agenda.ShowMessage(name, password)
+		if agenda.Check(name, password) {
 			agenda.AddUser(name, password)
 		}
 	},
