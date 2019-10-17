@@ -22,7 +22,8 @@ import (
 
 func main() {
   cmd.Execute()
-  defer tool.CloseFiles()
+  tool.WriteConfigure()
+  tool.CloseFiles()
 }
 
 

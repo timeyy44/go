@@ -58,6 +58,9 @@ func AddUser(name, password string) {
 	names.Users = append(names.Users, user)
 	tool.WriteJson(names, tool.Paths["user"])
 	tool.CreateFile(name, tool.GetJsonPath(name))
+	short := name
+	short += "_l"
+	tool.CreateFile(short, tool.GetLogPath(short))
 	message := "add user: "
 	message += name + " succeed"
 	tool.MakeLog("add user", message, tool.Files["reg"], true)

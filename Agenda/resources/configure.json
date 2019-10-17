@@ -1,0 +1,24 @@
+{
+	"paths": [
+		{
+			"short": "sys",
+			"path": "./log/sys.log"
+		},
+		{
+			"short": "reg",
+			"path": "./log/register.log"
+		},
+		{
+			"short": "user",
+			"path": "./resources/user.json"
+		},
+		{
+			"short": "userT1",
+			"path": "./resources/userT1.json"
+		},
+		{
+			"short": "userT1_l",
+			"path": "./log/userT1_l.log"
+		}
+	]
+}

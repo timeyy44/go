@@ -1,18 +1,19 @@
 package tool
 
 import (
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"os"
 )
 
 func ReadJson(a interface{}, path string) {
-	bytes, err := ioutil.ReadFile(path)
+	Bytes, err := ioutil.ReadFile(path)
 	if err != nil {
 		MakeLog("json read error", err.Error(), Files["sys"], false)
 		os.Exit(1)
 	}
-	err = json.Unmarshal(bytes, a)
+	err = json.Unmarshal(Bytes, a)
 	if err != nil {
 		MakeLog("Unmarshal error", err.Error(), Files["sys"], false)
 		os.Exit(1)
@@ -20,12 +21,18 @@ func ReadJson(a interface{}, path string) {
 }
 
 func WriteJson(a interface{}, path string) {
-	bytes, err := json.Marshal(a)
+	Bytes, err := json.Marshal(a)
 	if err != nil {
 		MakeLog("json error", err.Error(), Files["sys"], false)
 		os.Exit(1)
 	}
-	err = ioutil.WriteFile(path, bytes, 666)
+	var out bytes.Buffer
+	err = json.Indent(&out, Bytes, "", "\t")
+	if err != nil {
+		MakeLog("json convert error", err.Error(), Files["sys"], false)
+		os.Exit(1)
+	}
+	err = ioutil.WriteFile(path, out.Bytes(), 666)
 	if err != nil {
 		MakeLog("json write error", err.Error(), Files["sys"], false)
 		os.Exit(1)

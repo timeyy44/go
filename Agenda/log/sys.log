@@ -1,2 +1,5 @@
-[file normal] 13:18:02 tool.go:41: file opened: ./log/sys.log
-[file create] 13:18:10 tool.go:41: file created: ./resources/userT1.json
+[file normal] 17:31:33 tool.go:58: file opened: ./log/sys.log
+[file normal] 17:31:33 tool.go:58: file opened: ./log/register.log
+[file normal] 17:31:33 tool.go:58: file opened: ./resources/user.json
+[file create] 17:31:33 tool.go:58: file created: ./resources/userT1.json
+[file create] 17:31:33 tool.go:58: file created: ./log/userT1_l.log
