@@ -6,30 +6,14 @@ import (
 	"os"
 )
 
-type Users struct{
-	Name string `json:"name"`
-	Password string `json:"password"`
-}
-
-type Registers struct {
-	 Users []Users `json:"users"`
-}
-
-var names Registers
-
-func init() {
-	tool.ReadJson(&names, tool.Paths["user"])
-}
-
 func Check(name, password string) bool {
 	if name == "" {
 		tool.MakeLog("format error", "empty name", tool.Files["reg"], true)
 		return false
 	}
-	for _, user := range names.Users {
+	for _, user := range tool.Names.Users {
 		if name == user.Name {
-			message := "duplicate name: "
-			message += name
+			message := tool.GetMessage("duplicate name: ", name)
 			tool.MakeLog("repetition error", message, tool.Files["reg"], true)
 			return false
 		}
@@ -54,14 +38,12 @@ func Check(name, password string) bool {
 }
 
 func AddUser(name, password string) {
-	user := Users{Name: name, Password: password}
-	names.Users = append(names.Users, user)
-	tool.WriteJson(names, tool.Paths["user"])
+	user := tool.Users{Name: name, Password: password}
+	tool.Names.Users = append(tool.Names.Users, user)
+	tool.WriteJson(tool.Names, tool.Paths["user"])
 	tool.CreateFile(name, tool.GetJsonPath(name))
-	short := name
-	short += "_l"
+	short := tool.GetMessage(name, "_l")
 	tool.CreateFile(short, tool.GetLogPath(short))
-	message := "add user: "
-	message += name + " succeed"
+	message := tool.GetMessage("add user: ", name, " succeed")
 	tool.MakeLog("add user", message, tool.Files["reg"], true)
 }

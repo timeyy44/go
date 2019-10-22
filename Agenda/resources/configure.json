@@ -9,6 +9,10 @@
 			"path": "./log/register.log"
 		},
 		{
+			"short": "login",
+			"path": "./log/login.log"
+		},
+		{
 			"short": "user",
 			"path": "./resources/user.json"
 		},

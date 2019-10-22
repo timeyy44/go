@@ -7,6 +7,21 @@ import (
 	"os"
 )
 
+type Users struct{
+	Name string `json:"name"`
+	Password string `json:"password"`
+}
+
+type Registers struct {
+	Users []Users `json:"users"`
+}
+
+var Names Registers
+
+func init() {
+	ReadJson(&Names, Paths["user"])
+}
+
 func ReadJson(a interface{}, path string) {
 	Bytes, err := ioutil.ReadFile(path)
 	if err != nil {

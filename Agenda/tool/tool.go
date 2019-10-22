@@ -41,15 +41,14 @@ func init() {
 			}
 		}
 		Files[key] = file
-		message := "file opened: "
-		message += Paths[key]
+		message := GetMessage("file opened: ", Paths[key])
 		MakeLog("file normal", message, Files["sys"], false)
 	}
 }
 
 func MakeLog(prefix, message string, writer io.Writer, output bool) {
 	if writer == nil {
-		panic(errors.New("file writer can't find"))
+		panic(errors.New("file to write can't find"))
 	}
 	prefix = fmt.Sprintf("[%s] ", prefix)
 	log.SetPrefix(prefix)
@@ -103,5 +102,13 @@ func readConfigure() {
 
 func WriteConfigure() {
 	WriteJson(paths, configurePath)
+}
+
+func GetMessage(messages ...string) string {
+	message := ""
+	for _, str := range messages {
+		message += str
+	}
+	return message
 }
 

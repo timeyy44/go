@@ -16,25 +16,28 @@ limitations under the License.
 package cmd
 
 import (
-  "fmt"
-  "github.com/spf13/cobra"
-  "os"
+	"Agenda/agenda"
+	"github.com/spf13/cobra"
 )
 
-var rootCmd = &cobra.Command{
-  Use:   "agenda",
-  Short: "agenda command program",
-  Long: `be used for a test`,
+var lName string
+var lPassword string
 
-  Run: func(cmd *cobra.Command, args []string) {
-    _, _ = fmt.Fprintln(os.Stderr, "you should use the subCommands like `~ register`.")
-  },
+// loginCmd represents the login command
+var loginCmd = &cobra.Command{
+	Use:   "login",
+	Short: "login to your account",
+	Long: ``,
+	Run: func(cmd *cobra.Command, args []string) {
+		if agenda.CheckLogin(lName, lPassword) {
+			agenda.GotoAgenda()
+		}
+	},
 }
 
-func Execute() {
-  if err := rootCmd.Execute(); err != nil {
-    fmt.Println(err)
-    os.Exit(1)
-  }
-}
+func init() {
+	rootCmd.AddCommand(loginCmd)
 
+	loginCmd.Flags().StringVarP(&lName, "name", "n", "", "name for login")
+	loginCmd.Flags().StringVarP(&lPassword, "password", "p", "_default_", "password for login")
+}
