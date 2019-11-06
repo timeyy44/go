@@ -1,0 +1,5 @@
+[format error] 00:44:15 tool.go:58: login with empty name
+[format error] 00:44:28 tool.go:58: login with empty name
+[login normal] 00:45:03 tool.go:58: login with name: userT1 succeed
+[login normal] 00:46:24 tool.go:58: login with name: manager succeed
+[format error] 00:46:34 tool.go:58: login with empty name

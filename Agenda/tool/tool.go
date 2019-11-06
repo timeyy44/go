@@ -44,6 +44,7 @@ func init() {
 		message := GetMessage("file opened: ", Paths[key])
 		MakeLog("file normal", message, Files["sys"], false)
 	}
+	ReadJson(&Names, Paths["user"])
 }
 
 func MakeLog(prefix, message string, writer io.Writer, output bool) {
@@ -80,8 +81,7 @@ func CreateFile(short, path string) {
 		Files[short] = file
 		Paths[short] = path
 		paths.Files = append(paths.Files, File{short, path})
-		message := "file created: "
-		message += path
+		message := GetMessage("File created: ", path)
 		MakeLog("file create", message, Files["sys"], false)
 	}
 }

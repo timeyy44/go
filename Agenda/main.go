@@ -25,5 +25,3 @@ func main() {
   tool.WriteConfigure()
   tool.CloseFiles()
 }
-
-

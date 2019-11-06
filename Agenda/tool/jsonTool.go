@@ -18,10 +18,6 @@ type Registers struct {
 
 var Names Registers
 
-func init() {
-	ReadJson(&Names, Paths["user"])
-}
-
 func ReadJson(a interface{}, path string) {
 	Bytes, err := ioutil.ReadFile(path)
 	if err != nil {
